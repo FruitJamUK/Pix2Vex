@@ -8,11 +8,10 @@ import java.util.List;
 import svg.SvgElement;
 
 public class ShapeIndex {
- int rgb;
- //int[] start = new int[2];
+ int rgb; //colour of shapes to be found
  static int width; //of shape
  static int height;//of shape
- Boolean[][] points;
+ Boolean[][] points;//used to record whether pixels in the picture are of the same colour as 'rgb' or not
  BufferedImage image;
  
  public ShapeIndex(int colour, int w, int h, BufferedImage i){
@@ -22,23 +21,20 @@ public class ShapeIndex {
 	 for(int y=0;y<height;y++){ //for each row
 		 for(int x=0;x<width;x++){ //for each pixel in a row
 			 points[x][y]=(image.getRGB(x,y)==colour)?true:false; //if colours match, set true
-			 //System.out.print(points[x][y]+" ");
 			 }
-		 }//System.out.print("\n");
+		 }
 	 }
- 
- //public int getColour(){return rgb;}
  
  public SvgElement trace(){ //finds point at which 
 	 ArrayList<Edge> a = new ArrayList<Edge>(); //Edge ArrayList
 	 ArrayList<Edge> bin = new ArrayList<Edge>(); //Edges to be binned from ArrayList
 	 ArrayList<Point> p = new ArrayList<Point>(); //Points sequence recorded from edges
-	 ArrayList<ArrayList<Point>> s = new ArrayList<ArrayList<Point>>(); //SvgElements of this colour
+	 ArrayList<ArrayList<Point>> s = new ArrayList<ArrayList<Point>>(); //shapes of this colour
 	 
-	 //if top row/false = top edge follow edge	 
+	 //check edges of pixels to define shape edges
 	 for(int y=0;y<height;y++){ //for each row
 		 for(int x=0;x<width;x++){ //for each pixel in a row
-			 //System.out.println(x+","+y+","+points[x][y]);
+			 
 			if(points[x][y]){ //if pixel exists
 			 if(x==0)a.add(new Edge(x,y,x,y+1)); //leftmost column
 			 	else if(!points[x-1][y])a.add(new Edge(x,y,x,y+1));//check left
@@ -53,23 +49,24 @@ public class ShapeIndex {
 		 	}
 		 }
 	 
-	 //arraylist of pairs of points of top, bottom, left, right, compare points
-	 
+	 //append touching vertical/horizontal edges to each other
 	 for (Edge e: a) {
+		if(!bin.contains(e)){
 		 for(Edge f: a){
+			if(!bin.contains(f)){
 			 if(e.append(f)) bin.add(f);}//if appended, added to the bin
+		 	}
+		  }
 		}
 		 a.removeAll(bin);bin.removeAll(bin);
 		 
-	 int aSize=a.size();
-	 int index=0;
-	 //identify point sequence
-		 //for (int i=0;i<aSize;i++) { //last edge ignored, as final points should match up
+	 //identify point sequences of shapes
+		int index=0; //used to mark the start point of each shape
+		int size; //used to record the size of 'p' to see if anything has been added
 	 	while(!a.isEmpty()){
-	 		int size=p.size();
-	 		//int index=0;
+	 		 size=p.size();
 			 for(Edge e:a){
-				 if(p.size()==index){//p.isEmpty()){
+				 if(p.size()==index){
 					 p.add(e.getFirst()); System.out.print(e.getFirst());
 					 p.add(e.getSecond());System.out.println(e.getSecond());
 					 bin.add(e);}
@@ -81,26 +78,15 @@ public class ShapeIndex {
 					 p.add(e.getFirst()); System.out.println(e.getSecond());
 					 bin.add(e);}
 				 }
-			 a.removeAll(bin);
-			 //if(size==p.size()){
-				 //s.add(p);
-				 //p.removeAll(p);}
+			 a.removeAll(bin); bin.removeAll(bin);//removes all 'used' sides
 			 if(size==p.size()){ //ie, there has been no change
 				 ArrayList<Point> shape = new ArrayList<Point>(p.subList(index, size));
 				 s.add(shape);
 				 index=size; //therefore new shape is counted
 			 }
 			}
+	 		s.add( new ArrayList<Point>(p.subList(index, p.size()))); //final shape
 	 
-	 //new SvgElement
-		 //s=new SvgElement(p,rgb);
+	 //new SvgElement giving the list of shapes and colour of the shapes
 	 return new SvgElement(s,rgb);}
 }
- 
- 
- /*public static void add(coords){
-	 //if coloured point is further left than 0, width++, start[0]--,
- }
- 
- public static void discover(image , colour){}
-}*/

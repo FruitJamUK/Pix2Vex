@@ -78,28 +78,8 @@ public static void main(String[] args){
 						map.put(rgb,createShapeIndex(rgb));
 						svg=svg+map.get(rgb).trace().getText();
 					}
-					//System.out.println(rgb+","+map.get(rgb));
-					//for(SvgElement s: map.get(rgb).trace()){svg=svg+s.getText();}
-					
-					
-					/*if(aList.isEmpty())aList.add(createShapeIndex(rgb));
-					else{ Boolean exists = false;
-					for(int i=0;i<=aList.size();i++){
-						exists=(aList.get(i).getColour()==rgb)?true:false;
-						if(exists)break;}
-					if(!exists)aList.add(createShapeIndex(rgb));*/
-					
-					/*newSvgElement(rgb >> 16 & 0xff, //red
-								rgb >> 8 & 0xff, //green
-								rgb & 0xff, //blue
-								rgb >> 32 & 0xff, //alpha
-								x,y);*/
 					}
-		}//System.out.println("map size= "+map.size());
-		
-		//for(Entry<Integer, ShapeIndex> e : map.entrySet()){svg=svg + e.getValue().trace().getText();}
-		//for(Integer i : map.keySet()){svg=svg+map.get(i).trace().getText();}
-		
+		}
 		save(svg,imageLocation);
 		 
 }
@@ -111,15 +91,12 @@ public static ShapeIndex createShapeIndex(int colour){
 
 //public static int[] convertRGB(){return null;}
 
-public static void newSvgElement(int r,int g,int b,int a,int x, int y) { //String?
-	//rect x y width height fill=rgb() fill-opacity
+public static void newSvgElement(int r,int g,int b,int a,int x, int y) {
 	svg = svg +
 	"<rect"+
 	" x=\""+x*5+
 	"\" y=\""+y*5+
 	"\" width=\"5\" height=\"5\""+
-	//" fill=rbg("+r+","+g+","+b+")"+
-	//" fill-opacity="+(a/255)+
 	" style=\"fill:rgb("+r+","+g+","+b+");\""+
 	"/>";
 }
@@ -129,7 +106,6 @@ public static void save(String svg, String filepath){
 	svg=svg+"</svg>";
 	int x = filepath.indexOf(".");
 	String newFP = filepath.substring(0, x+1) + "svg";
-	//File newSvg = new File(newFP);
 	
 	try {
 		PrintWriter writer = new PrintWriter(newFP, "UTF-8");
@@ -142,8 +118,5 @@ public static void save(String svg, String filepath){
 	}
 }
 
-/*add: transparency, 'block computation', GUI, alpha layer, filename based on multiplier
- *separate: image loading from main
- *Block computation, initially line computation. Find like colours and create larger overlapping shapes out of them
- *Polygons rather than rects?*/
+/*add: transparency, GUI, alpha layer, filename based on multiplier*/
 }

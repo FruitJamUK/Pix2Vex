@@ -29,5 +29,4 @@ public Boolean append(Edge e){ //Boolean returned so the user knows whether to d
 	return false;
 }
 
-//public void attach(Edge e){}
 }

@@ -28,5 +28,3 @@ public class SvgElement {
 
  public String getText(){return svg.toString();}
 }
-
-//merge 'pixels'
