@@ -74,10 +74,13 @@ public static void main(String[] args){
 					rgb=image.getRGB(x, y);
 					//System.out.println("pixel rgb,x,y:"+rgb+","+x+","+y);
 					
-					if(!map.containsKey(rgb)) map.put(rgb,createShapeIndex(rgb));
+					if(!map.containsKey(rgb)){
+						map.put(rgb,createShapeIndex(rgb));
+						svg=svg+map.get(rgb).trace().getText();
+					}
 					//System.out.println(rgb+","+map.get(rgb));
 					//for(SvgElement s: map.get(rgb).trace()){svg=svg+s.getText();}
-					svg=svg+map.get(rgb).trace().getText();
+					
 					
 					/*if(aList.isEmpty())aList.add(createShapeIndex(rgb));
 					else{ Boolean exists = false;
