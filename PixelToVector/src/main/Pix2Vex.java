@@ -45,7 +45,6 @@ public static void main(String[] args){
 		for(int y=0;y<height;y++){
 				for(int x=0;x<width;x++){
 					rgb=image.getRGB(x, y);
-					//System.out.println("pixel rgb,x,y:"+rgb+","+x+","+y);
 					
 					if(!map.containsKey(rgb)){
 						map.put(rgb,createShapeIndex(rgb));
@@ -62,7 +61,6 @@ public static ShapeIndex createShapeIndex(int colour){
 	return si;
 }
 
-//public static int[] convertRGB(){return null;}
 
 public static void newSvgElement(int r,int g,int b,int a,int x, int y) {
 	svg = svg +
