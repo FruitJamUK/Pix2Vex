@@ -40,33 +40,6 @@ public static void main(String[] args){
 		svg = "<?xml version=\"1.0\" encoding=\"utf-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">"
 				+"<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" height=\""+height*multiplier+"\" width=\""+width*multiplier+"\">";
 		
-		imageCM = image.getColorModel();
-		
-		//StringBuffer svg //add elements to this
-		
-		/*int[][] pixelArray = new int[width][height]; //empty. replace with copying colours to svg? no need to store...
-		for(int[] line: pixelArray){
-			for(int pixel: line){}
-		}*/
-		
-		/*int currentPixel=0;
-		//int[] rgb=new int[3];
-		int rgb;
-		for(int x=0;x<height;x++){
-			//if(x>0)currentPixel++;
-			for(int y=0;y<width;y++){
-				if(x>0)currentPixel++; //sequential through picture (0 indexed) otherwise addition necessary
-				//newSvgElement(imageCM.getRed(currentPixel),imageCM.getGreen(currentPixel),imageCM.getBlue(currentPixel),imageCM.getAlpha(currentPixel),x,y);
-				rgb=image.getRGB(x, y);
-				newSvgElement(rgb >> 16 & 0xff, //red
-							rgb >> 8 & 0xff, //green
-							rgb & 0xff, //blue
-							rgb >> 32 & 0xff, //alpha
-							x,y);
-				//int colour = image.getRGB(x,y); //colour, x, y : pump into method
-				//if colour is not transparent, newSvgElement(colour,x,y); rect x y width height fill=rgb() fill-opacity
-				//use color model? (width*(x+1)) + y to find pixel?
-				}*/
 			
 		int rgb;	
 		for(int y=0;y<height;y++){
